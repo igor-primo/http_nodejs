@@ -34,4 +34,6 @@ async function request_listener(req, res){
 	}
 }
 
-http.createServer(request_listener).listen(5000);
+const PORT = process.env.PORT;
+
+http.createServer(request_listener).listen(PORT);
