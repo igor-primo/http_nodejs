@@ -20,13 +20,15 @@ async function request_listener(req, res){
 
 	} else if(req.url === '/api/v1/books' && req.method === 'GET'){
 
-		await user.authenticate(req, res);
-		book.get_books(req, res);
+		const id_us = await user.authenticate(req, res);
+		if(id_us)
+			book.get_books(req, res);
 
 	} else if(req.url === '/api/v1/books' && req.method === 'POST'){
 
 		const id_us = await user.authenticate(req, res);
-		book.post_book(req, res, id_us);
+		if(id_us)
+			book.post_book(req, res, id_us);
 
 	} else {
 		res.writeHead(404, {'Content-Type': 'application/json'});
