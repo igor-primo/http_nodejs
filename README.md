@@ -5,5 +5,5 @@ way more elegant than Express.js.
 
 ## Currently implemented routes
 
-* curl -X POST http\:\/\/host\:port\/api\/v1\/user -d '{"name":"my_name","email":"my_email\@email\.com","password":"my_password"}'
-* curl http\:\/\/host\:port\/api\/v1\/userlogin?email=my_email\@emai\.com&password=my_password
+* curl -X POST http\:\/\/host\:port\/api\/v1\/user -d '{"name":"my_name","email":"email_here","password":"my_password"}'
+* curl http\:\/\/host\:port\/api\/v1\/userlogin?email=email_here&password=my_password
