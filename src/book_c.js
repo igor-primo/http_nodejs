@@ -35,10 +35,10 @@ class book_c {
 				if(synopsis && !(1 <= synopsis.length && synopsis.length <= 300))
 					throw new error_c('Synopsis out of bounds.', 300);
 
-				if(!(MIN_NAME_L <= name.length <= MAX_NAME_L))
+				if(!(MIN_NAME_L <= name.length && name.length <= MAX_NAME_L))
 					throw new error_c('Name length is not within bounds.', 300);
 
-				if(!(MIN_NAME_L <= author.length <= MAX_NAME_L))
+				if(!(MIN_NAME_L <= author.length && author.length <= MAX_NAME_L))
 					throw new error_c('Author name length is not within bounds.', 300);
 
 				const q = `INSERT INTO books
