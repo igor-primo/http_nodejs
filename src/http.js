@@ -12,6 +12,10 @@ function request_listener(req, res){
 
 		user.login(req, res);
 
+	} else if(req.url === '/api/v1/authenticate_test' && req.method === 'GET'){
+
+		user.authenticate(req, res);
+
 	} else {
 		res.writeHead(404, {'Content-Type': 'application/json'});
 		res.end(JSON.stringify({msg: 'Route not found.'}));

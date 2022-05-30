@@ -10,7 +10,7 @@ function respond_err(e, res){
 		res.writeHead(e.status, {'Content-Type': 'application/json'});
 		res.end(JSON.stringify({msg: e.message}));
 	} else {
-		console.log(e.message);
+		console.log(e);
 		res.writeHead(500, {'Content-Type': 'application/json'});
 		res.end(JSON.stringify({msg: 'Internal server error.'}));
 	}

@@ -1,4 +1,5 @@
 const bcrypt = require('bcryptjs');
+const jwt = require('jsonwebtoken');
 const db = require('./db');
 const {error_c, respond_err}= require('./error_c');
 
@@ -100,10 +101,32 @@ class user_c {
 				throw new error_c('Incorrect data or user is not registered.', 401);
 
 			/* send jwt */
-			const token = '';
+			const id_us = user.rows[0].id;
+			const PRIV_KEY = process.env.PRIVATE_KEY;
+			const token = jwt.sign({id_us}, PRIV_KEY,{expiresIn: '2h', algorithm: 'RS256'});
 			res.writeHead(200, {'Content-Type': 'application/json'});
 			res.end(JSON.stringify({msg: 'Welcome.', token}));
 		} catch(e) {
+			respond_err(e, res);
+		}
+	}
+
+	authenticate(req, res){
+		try {
+			if(!req.headers['authorization'])
+				throw new error_c('You need to pass the authorization header with the token', 401);
+
+			let decoded = {};
+			const token = req.headers['authorization'].split(' ')[1];
+			const PUB_KEY = process.env.PUBLIC_KEY;
+			if(!(decoded = jwt.verify(token, PUB_KEY, {algorithms: ['RS256']})))
+				throw new error_c('Invalid token.', 401);
+
+			console.log(decoded);
+
+			res.writeHead(200, {'Content-Type': 'application/json'});
+			res.end(JSON.stringify({msg: 'I think I know you.'}));
+		} catch(e){
 			respond_err(e, res);
 		}
 	}
