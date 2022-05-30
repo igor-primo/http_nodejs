@@ -111,7 +111,7 @@ class user_c {
 		}
 	}
 
-	authenticate(req, res){
+	async authenticate(req, res){
 		try {
 			if(!req.headers['authorization'])
 				throw new error_c('You need to pass the authorization header with the token', 401);
@@ -122,10 +122,19 @@ class user_c {
 			if(!(decoded = jwt.verify(token, PUB_KEY, {algorithms: ['RS256']})))
 				throw new error_c('Invalid token.', 401);
 
-			console.log(decoded);
+			const id_us = decoded.id_us;
 
+			const user_q = `SELECT id FROM users WHERE id = $1`;
+			const user_v = [ id_us ];
+			const user_query = await db.query(user_q, user_v);
+			if(user_query.rows.length <= 0)
+				throw new error_c('User not found in database. Token is invalid.', 401);
+
+			return id_us;
+			/*
 			res.writeHead(200, {'Content-Type': 'application/json'});
 			res.end(JSON.stringify({msg: 'I think I know you.'}));
+			*/
 		} catch(e){
 			respond_err(e, res);
 		}

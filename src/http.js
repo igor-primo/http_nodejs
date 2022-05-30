@@ -1,9 +1,11 @@
 const http = require('http');
 const user_c = require('./user_c');
+const book_c = require('./book_c');
 
 const user = new user_c();
+const book = new book_c();
 
-function request_listener(req, res){
+async function request_listener(req, res){
 	if(req.url === '/api/v1/user' && req.method === 'POST'){
 
 		user.post_user(req, res);
@@ -15,6 +17,16 @@ function request_listener(req, res){
 	} else if(req.url === '/api/v1/authenticate_test' && req.method === 'GET'){
 
 		user.authenticate(req, res);
+
+	} else if(req.url === '/api/v1/books' && req.method === 'GET'){
+
+		await user.authenticate(req, res);
+		book.get_books(req, res);
+
+	} else if(req.url === '/api/v1/books' && req.method === 'POST'){
+
+		const id_us = await user.authenticate(req, res);
+		book.post_book(req, res, id_us);
 
 	} else {
 		res.writeHead(404, {'Content-Type': 'application/json'});
