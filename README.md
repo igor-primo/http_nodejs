@@ -10,3 +10,5 @@ way more elegant than Express.js.
 * With the token as an environment variable, test it: curl http\:\/\/host:port\/api\/v1\/authenticate_test -H 'Authorization: Bearer '"$TOKEN"''
 * Get a list of books: curl http\:\/\/host:port\/api\/v1\/books -H 'Authorization: Bearer '"$TOKEN"''
 * Post a book recomendation: curl -X POST http\:\/\/host:port\/api\/v1\/books -H 'Authorization: Bearer '"$TOKEN"''
+
+Server deployd to https://my-http.herokuapp.com. Go there and post a few books recommendations.
